@@ -12,11 +12,11 @@ def main(argv):
 	try:
 		opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
 	except getopt.GetoptError:
-		print ('python pre-data.py -i <inputfile>')
+		print ('python run_algos.py -i <inputfile>')
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
-			print ('python pre-data.py -i <inputfile>')
+			print ('python run_algos.py -i <inputfile>')
 			sys.exit()
 		elif opt in ("-i", "--ifile"):
 			inputfile = arg

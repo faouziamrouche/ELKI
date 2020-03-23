@@ -13,7 +13,7 @@ def main(argv):
 	file2='Shuttle_dataset.csv'
 	repet=1
 	try:
-		opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+		opts, args = getopt.getopt(argv,"hi:f:",["ifile=","ofile="])
 	except getopt.GetoptError:
 		print ('concat.py -i <repetitions> -f <inputfile>')
 		sys.exit(2)
@@ -24,8 +24,8 @@ def main(argv):
 		elif opt in ("-i"):
 			repet = int(arg)
 		elif opt in ("-f"):
-			file2= int(arg)
-	for x in range(0,repet):
+			file2= arg
+	for y in range(0,repet):
 		li = []
 		for i in algos:
 			url = "./results/"+i+"/"
@@ -38,8 +38,9 @@ def main(argv):
 		li.append(df)
 		frame = pd.concat(li, axis=1)#, ignore_index=True)
 		frame = frame.replace(regex=True, to_replace=["cof-outlier=","abod-outlier=","inflo-outlier=","knn-outlier=","knnw-outlier=","ldof-outlier=","lof-outlier=","loop-outlier=","odin=","simplified-","kdeos-outlier="], value="")
-		frame = frame.rename(columns={10: "label"})
-		frame.to_csv('./results/result-'+str(x+1)+'.csv')
+		frame = frame.set_axis([*frame.columns[:-1], 'Label'], axis=1, inplace=False)
+		# frame = frame.rename(columns={10: "label"})
+		frame.to_csv('./results/result-'+str(y+1)+'.csv',index=False)
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
